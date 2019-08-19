@@ -1,5 +1,7 @@
 package me.naenae.main;
 
+import me.naenae.main.game.Player;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.Serializable;
@@ -10,18 +12,25 @@ public class Game extends Canvas implements Runnable, Serializable {
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
     private boolean running;
     private Thread thread;
+    public Player player = new Player(50, 70, GameObjectType.PLAYER_T);
+    private Handler handler = new Handler();
+    private Window w;
 
     public Game(){
-        new Window(WIDTH, HEIGHT, "Game", this);
+        w = new Window(WIDTH, HEIGHT, "Game", this);
+        System.out.println("[INIT]Game Starting");
+        handler.addGameObject(player);
     }
 
     public synchronized void start(){
         thread = new Thread(this);
         thread.start();
         running = true;
+        System.out.println("[INIT]Game Thread Started");
     }
 
     public synchronized void stop(){
+        System.out.println("[INIT]Game Thread Stopped");
         try{
             thread.join();
             running = false;
@@ -60,7 +69,7 @@ public class Game extends Canvas implements Runnable, Serializable {
     }
 
     private void tick(){
-
+        handler.tick();
     }
 
     private void render(){
@@ -73,15 +82,19 @@ public class Game extends Canvas implements Runnable, Serializable {
 
         Graphics g = bs.getDrawGraphics();
 
-        g.setColor(Color.WHITE);
+        g.setColor(Color.black);
         g.fillRect(0,0, WIDTH, HEIGHT);
+        g.setColor(Color.white);
+        g.drawRect(0,0, WIDTH - 7, HEIGHT - 30);
+
+        handler.render(g);
 
         g.dispose();
-
         bs.show();
     }
 
     public static void main(String args[]){
+        System.out.println("[INIT]Beginning Launch");
         new Game();
     }
 }
