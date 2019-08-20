@@ -7,54 +7,55 @@ public abstract class GameObject {
     protected GameObjectType type;
     protected int volX, volY;
 
-    public GameObject(int x, int y, GameObjectType type){
+    public GameObject(int x, int y, GameObjectType type) {
         this.x = x;
         this.y = y;
         this.type = type;
     }
 
     public abstract void tick();
+
     public abstract void render(Graphics g);
 
-    public int getX(){
+    public int getX() {
         return this.x;
     }
 
-    public int getY(){
+    public int getY() {
         return this.y;
     }
 
-    public int getVolX(){
+    public int getVolX() {
         return this.volX;
     }
 
     //  Getters
-    public int getVolY(){
+    public int getVolY() {
         return this.volY;
     }
 
-    public GameObjectType getType(){
+    public GameObjectType getType() {
         return this.type;
     }
 
     //  Setters
-    public void setX(int i){
+    public void setX(int i) {
         this.x = i;
     }
 
-    public void setY(int i){
+    public void setY(int i) {
         this.y = i;
     }
 
-    public void setVolX(int i){
+    public void setVolX(int i) {
         this.volX = i;
     }
 
-    public void setVolY(int i){
+    public void setVolY(int i) {
         this.volY = i;
     }
 
-    public void setType(GameObjectType i){
+    public void setType(GameObjectType i) {
         this.type = i;
     }
 }
