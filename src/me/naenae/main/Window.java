@@ -12,7 +12,7 @@ public class Window extends Canvas implements Serializable {
 
     private static final long serialVersionUID = 7143266076317126118L;
 
-    public Window(int width, int height, String title, Game game) {
+    public Window(int width, int height, String title, Game game){
         JFrame frame = new JFrame(title);
 
         frame.setPreferredSize(new Dimension(width, height));
