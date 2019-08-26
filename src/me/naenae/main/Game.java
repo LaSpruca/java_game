@@ -1,17 +1,24 @@
 package me.naenae.main;
 
+import javafx.embed.swing.JFXPanel;
 import me.naenae.main.game.Circle;
+import me.naenae.main.game.MagnumDong;
 import me.naenae.main.game.Player;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.io.Serializable;
 import java.util.Random;
+import java.io.File;
+
+import javafx.scene.media.*;
+
+import javax.sound.sampled.*;
 
 public class Game extends Canvas implements Runnable, Serializable {
     private static final long serialVersionUID = 7698194239351869889L;
 
-    public static final int WIDTH = 1000, HEIGHT = WIDTH / 12 * 9;
+    public static final int WIDTH = 1366, HEIGHT = 768;
     private boolean running;
     private Thread thread;
     public Player player = new Player(50, 70);
@@ -21,7 +28,22 @@ public class Game extends Canvas implements Runnable, Serializable {
     public Game() {
         w = new Window(WIDTH, HEIGHT, "Game", this);
         System.out.println("[INIT]Game Starting");
-        handler.addGameObject(player);
+        try {
+            File yourFile;
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(new File("src/me/naenae/main/earrape.wav"));
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public synchronized void start() {
@@ -74,12 +96,11 @@ public class Game extends Canvas implements Runnable, Serializable {
     private void tick() {
         Random r = new Random();
         handler.tick();
-        handler.gameObjects.add(new Player(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
-        handler.gameObjects.add(new me.naenae.main.game.Circle(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
-        handler.gameObjects.add(new Player(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
-        handler.gameObjects.add(new me.naenae.main.game.Circle(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
-        handler.gameObjects.add(new Player(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
-        handler.gameObjects.add(new me.naenae.main.game.Circle(r.nextInt(WIDTH - 100), r.nextInt(HEIGHT - 100)));
+        for (int i = 0; i < 5; i++) {
+            handler.gameObjects.add(new Player(r.nextInt(200), r.nextInt(200)));
+            handler.gameObjects.add(new Circle(r.nextInt(200), r.nextInt(200)));
+            handler.gameObjects.add(new MagnumDong(r.nextInt(200), r.nextInt(200)));
+        }
     }
 
     private void render() {
