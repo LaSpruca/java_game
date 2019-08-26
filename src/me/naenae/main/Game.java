@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable, Serializable {
             DataLine.Info info;
             Clip clip;
 
-            stream = AudioSystem.getAudioInputStream(new File("src/me/naenae/main/earrape.wav"));
+            stream = AudioSystem.getAudioInputStream(new File("assets/earrape.wav"));
             format = stream.getFormat();
             info = new DataLine.Info(Clip.class, format);
             clip = (Clip) AudioSystem.getLine(info);
