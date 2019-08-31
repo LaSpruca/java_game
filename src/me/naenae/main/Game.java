@@ -129,5 +129,21 @@ public class Game extends Canvas implements Runnable, Serializable {
     public static void main(String args[]) {
         System.out.println("[INIT]Beginning Launch");
         new Game();
+        try {
+            File yourFile;
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(new File("assets/earrape.wav"));
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.loop(10000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
